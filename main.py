@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.firefox.service import Service
 from urllib.parse import urlparse
 from time import sleep
 from datetime import datetime
@@ -10,9 +11,13 @@ from pprint import pprint
 import config
 import log
 
+#Check machine
+from platform import uname
+system_version = uname()
+
 stop_normal = 3
 stop_longer = 100
-#Variaveis
+#Variaveis padrões
 username = config.username
 password = config.password
 page_login = "https://prenotami.esteri.it/"
@@ -20,16 +25,28 @@ page_book = 'https://prenotami.esteri.it/Services/Booking/2427'
 frase_no_appointement = "Sorry, all appointments for this service are currently booked. Please check again tomorrow for cancellations or new appointments."
 
 #configuracao browser
-changes = Options()
-##### Testando headless
-changes.add_argument('--headless')
-changes.add_experimental_option(
-    "excludeSwitches", ['enable-automation'])
+if system_version.machine == 'x86_64':
+    changes = Options()
+    changes.add_argument('--headless')
+    changes.add_experimental_option(
+        "excludeSwitches", ['enable-automation'])
 
-changes.add_argument(
-    "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-changes.add_argument("--remote-debugging-port=9222")
-chrome = Chrome(options=changes)
+    changes.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+    changes.add_argument("--remote-debugging-port=9222")
+    chrome = Chrome(options=changes)
+else:
+    #configuracao browser
+    options = Options()
+    #options.add_argument('--headless')
+    #options.add_experimental_option("excludeSwitches", ['enable-automation'])
+    #options.add_experimental_option("useAutomationExtension", False)
+    #options.add_argument("--disable-blink-features=AutomationControlled")                     
+    #options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+    options.add_argument("--remote-debugging-port=9222")
+    chrome = Chrome(service=Service('/usr/bin/chromedriver'),options=options)
+    #chrome.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
 
 #Coleta de horas para execuao
 def time():
