@@ -8,6 +8,7 @@ from time import sleep
 from datetime import datetime
 from pprint import pprint
 import config
+import log
 
 stop_normal = 3
 stop_longer = 100
@@ -20,7 +21,14 @@ frase_no_appointement = "Sorry, all appointments for this service are currently 
 
 #configuracao browser
 changes = Options()
-#changes.add_argument('--headless')
+##### Testando headless
+changes.add_argument('--headless')
+changes.add_experimental_option(
+    "excludeSwitches", ['enable-automation'])
+
+changes.add_argument(
+    "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+changes.add_argument("--remote-debugging-port=9222")
 chrome = Chrome(options=changes)
 
 #Coleta de horas para execuao
@@ -34,6 +42,7 @@ def validantion_login():
         check = chrome.find_element(By.TAG_NAME, 'body')
         if check.text == 'Unavailable':
             print("Acesso interompido pelo host. Tentando novamente em breve")
+            log.page_stop("Acesso interompido pelo host. Tentando novamente em breve")
             sleep(200)
             login(username, password)
     except:
@@ -73,9 +82,11 @@ def loop_book():
         check = chrome.find_element(By.XPATH, '//div[contains(@class, "jconfirm-content")]')
         if check.text == frase_no_appointement:
             print("Sem horario disponinvel", time())
+            log.withoutbook("Sem horario disponinvel")
             sleep(stop_longer)
         else:
             print('\033[93mMUDANCA DE ROTINA!!!!\033[0m')
+            log.found_book('MUDANCA DE ROTINA!!!!')
             return 1
 
 
@@ -86,3 +97,4 @@ if __name__ == '__main__':
             loop_book()
         except KeyboardInterrupt:
             print("Programa parado pelo usuario!")
+            log.stop_programm("Programa parado pelo usuario!")
