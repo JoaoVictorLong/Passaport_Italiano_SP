@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.firefox.service import Service
 from urllib.parse import urlparse
 from time import sleep
 from datetime import datetime
-from pprint import pprint
 import config
 import log
 
@@ -87,6 +87,11 @@ def wait():
         if volta_login.query == 'ReturnUrl=%2fServices%2fBooking%2f2427':
             login(username, password)
         return 2
+    except WebDriverException:
+        print("Erro de conexão")
+        log.page_stop("Erro de conexão")
+        sleep(200)
+        login(username, password)
 
 #Loop books
 def loop_book():
