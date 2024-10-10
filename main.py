@@ -4,12 +4,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import WebDriverException
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.chrome.service import Service
 from urllib.parse import urlparse
 from time import sleep
 from datetime import datetime
 import config
 import log
+from pyvirtualdisplay import Display
 
 #Check machine
 from platform import uname
@@ -26,25 +27,29 @@ frase_no_appointement = "Sorry, all appointments for this service are currently 
 
 #configuracao browser
 if system_version.machine == 'x86_64':
-    changes = Options()
-    changes.add_argument('--headless')
-    changes.add_experimental_option(
+    print('Sistema Linux')
+    options = Options()
+    options.add_argument('--headless')
+    options.add_experimental_option(
         "excludeSwitches", ['enable-automation'])
 
-    changes.add_argument(
+    options.add_argument(
         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-    changes.add_argument("--remote-debugging-port=9222")
-    chrome = Chrome(options=changes)
+    options.add_argument("--remote-debugging-port=9222")
+    chrome = Chrome(options=options)
 else:
     #configuracao browser
+    print('Sistema Rasp')
+    display = Display(visible=0, size=(800,600))
+    display.start()
     options = Options()
-    #options.add_argument('--headless')
+    options.add_argument('--headless')
     #options.add_experimental_option("excludeSwitches", ['enable-automation'])
     #options.add_experimental_option("useAutomationExtension", False)
     #options.add_argument("--disable-blink-features=AutomationControlled")                     
-    #options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
     options.add_argument("--remote-debugging-port=9222")
-    chrome = Chrome(service=Service('/usr/bin/chromedriver'),options=options)
+    chrome = Chrome(service=Service(executable_path='/usr/bin/chromedriver'),options=options)
     #chrome.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
 
