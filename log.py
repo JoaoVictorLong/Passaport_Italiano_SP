@@ -7,6 +7,7 @@ log_wait = logging.handlers.WatchedFileHandler('appontment.log')
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger()
 logger.addHandler(log_wait)
+log_wait.setFormatter(formatter)
 logger.setLevel(logging.INFO)
 
 def page_stop(messagem):
