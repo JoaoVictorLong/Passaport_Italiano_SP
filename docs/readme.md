@@ -1,7 +1,7 @@
-![Static Badge](https://img.shields.io/badge/linkedin-blue?logo=linkedin&link=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjoaovictorlong%2F)
-![Gitea Last Commit](https://img.shields.io/gitea/last-commit/joaovictorlong/passaport_italiano_sp)
-![Gitea Forks](https://img.shields.io/gitea/forks/joaovictorlongo/passaport_italiano_sp)
-![Gitea Stars](https://img.shields.io/gitea/stars/joaovictorlong/passaport_italiano_sp)
+[![Static Badge](https://img.shields.io/badge/linkedin-blue?logo=linkedin)](https://www.linkedin.com/in/joaovictorlong/)
+![GitHub last commit](https://img.shields.io/github/last-commit/JoaoVictorLong/Passaport_Italiano_SP)
+![GitHub forks](https://img.shields.io/github/forks/JoaoVictorLong/Passaport_Italiano_SP)
+![GitHub Repo stars](https://img.shields.io/github/stars/JoaoVictorLong/Passaport_Italiano_SP)
 ![Static Badge](https://img.shields.io/badge/linux-black?logo=linux)
 ![Static Badge](https://img.shields.io/badge/raspberry-red?logo=raspberrypi)
 
