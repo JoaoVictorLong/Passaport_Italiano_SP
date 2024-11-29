@@ -17,6 +17,7 @@ import os
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+import send_notifi
 #Check machine
 from platform import uname
 system_version = uname()
@@ -188,6 +189,7 @@ def loop_book():
         else:
             print('\033[93mMUDANCA DE ROTINA!!!!\033[0m')
             log.found_book('MUDANCA DE ROTINA!!!!')
+            send_notifi.send()
             return 1
 
 
